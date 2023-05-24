@@ -1,0 +1,250 @@
+
+k-distance of xi means: distance from k'th nearest neighbour of xi form xi
+
+vaneko cluster ma pani diffrent distance farak hunxa, k=1 vaneko nearest from point xi
+                                                      k=2 vaneko second nearest from point xi
+                                                      similarly k=n vaneko n'th nearest from point xi
+                                                      
+                                                      and distance means its distance
+                                                      
+k-nn means k'th nearest neighbour,
+
+
+
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+
+dataset is of 2 types 
+1. balanced dataset
+2. imbalanced dataset
+
+  as for example suppose d+ as positive data and d- as negative data
+
+
+ balanced dataset:
+     d+ and d- will be equal
+     
+ imbalanced dataset:
+     d+!= d-
+     
+     in this case if d+ = 100 and d- = 900
+     then the result will be biased on d- 
+     
+     so we need to convert imbalanced dataset to balanced dataset
+     
+     for this we have two types to make balanced dataset:
+         1. undersampling:
+                 here d+ = 100
+                  and d- = 100 (randomly choosen value)
+                  
+         
+         2. oversampling:
+             i) repeat(classweight):
+                     one point of d+ is repeated 9 times, so d+ = 900
+                     d- = 900
+                     
+             ii) synthetic: 
+                     randomly point is placed on d+ cluster until both dataset are equal
+                     
+               
+               
+               
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+Multiclass classification
+    has a lot of class and we need to disinguish whether it belongs there or not. k-nn easily be extended to multiclass classification
+    
+    suppose we have c classes so
+       and we are using 7-nn to find which class does it belong.
+       
+       classes         number of neighbour
+            x1         0
+            x2         6
+            x3         1
+            x4         0
+    rest till xc       0 
+            
+            
+            as of majority of class 2 we can declare yc = 2 
+            
+
+
+Probability classification
+    taking above example we get
+    probability of 
+           classes         probability of neighbour
+            x1         0
+            x2         6/7
+            x3         1/7
+            x4         0
+    rest till xc       0 
+    
+    looking from probability we can give output
+    
+    
+    
+Binary classification:
+
+     as we know binary has 0 and 1
+     so this gives weather that point lies on that class or not 
+     
+          given as multiclass can be converted into binary classification too
+          
+          for c classes 
+          
+          we need to check all those classes:
+          
+           f1(x): checks class 1 
+                         or not
+                         
+           f2(x): checks class 2 
+                         or not
+                         
+           f3(x): checks class 3
+                         or not  
+                         
+           so on till fc(x)
+                        
+                        
+                        
+     @ Logistic regression is fundamentally binary classification
+                           cannot do multiclass as easily as knn
+                           
+                           
+   
+   
+   
+............................................................................................................................................
+............................................................................................................................................ 
+
+                           
+     
+            
+            
+Train and Test data 
+    
+    d+ has positive data and d- has negative data.. now both d+ and d- will have its cluster.
+
+    suppose we have data d1 for trainig data and data d2 for test data.
+    
+    then the trained data d1 will make cluster of d+ and d- 
+    
+    but due to random occurance the testing data d2's d+ may not lie on the cluster created by trained data d1 for d+
+    likely d- of d2 may not be on same cluster of d- of d1
+    
+    so now we use binary classifier
+    
+    here we distribute the train and test data by concatinating
+    and use binary classifier
+    what this does is, it separate train data and test data.
+    if the binary classifier has 70% accuracy then we can say 70% od data are separated and rest 30% data are overlapped between train       data and test data
+    
+    
+     two sets train data and of test data are separated by using binary classifier then
+         1.  if they are more overlapped well then we will have low accuracy, and distribution will be less(best case)
+         2.  if it is less overlapped then we will have more accuracy, and distribution will be more(wrost case)
+         
+
+         
+   d1 and d2: 
+           - same distribution(good)
+           - different distribution (bad)
+               this means features is changing with time, so more features are to be added.
+               
+               
+               
+    
+ 
+ 
+............................................................................................................................................
+............................................................................................................................................
+ 
+    
+    
+    
+Outlier
+    if k is less in k-nn then outlier is more prone and will impact more
+    if k is more in k-nn then outlier is less prone and will impact less
+    
+    so while choosing model after viewing accuracy, chose the model having greater value of k
+    
+
+ we can detect and remove outlier by using LocalOutlinerFactor in k-nn
+ 
+ 
+............................................................................................................................................
+............................................................................................................................................
+    
+    
+    
+    simple solution for outlier
+    
+    -make a cluster of point
+    -take average distance of separation
+    -if the distance of separation between that point is greater than average distance, then outlier
+    
+    but problem arises when we have multiple cluster, as multiple cluster may have diffrent average distance.
+    
+    so we use LocalOutlinerFactor
+    
+    
+    
+............................................................................................................................................
+............................................................................................................................................
+
+
+reachability_distance(xi, xj)= Max(k-distance (xj) , dist(xi, xj) )
+ if xi ∈ Neigh(xj) then
+     reachability_distance(xi, xj) = k-distance(xj)
+ else
+     reachability_distance(xi, xj) = dist(xi, xj)
+     
+     
+
+ Local Outliner Density is the inverse of average of the reachability_distance of xi from its neighbour
+  LRD=            1
+          _______________________________________________________
+          
+          summation of       reachability_distance(xi, xj)
+          xi ∈ Neigh(xj)     ________________________________
+                              
+                             number of points
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                  
+     
+         
+    
