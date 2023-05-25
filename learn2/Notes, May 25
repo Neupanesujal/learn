@@ -1,0 +1,279 @@
+
+local outlier factor =   summation  lrd(xj)       1
+                         xj ∈ N(xj)  
+                         __________________ * _________________
+                                                 
+                         
+                         N(xi)                   lrd(xi)
+                         
+                         
+                         
+                         
+                         lrd of xi means the max reachability from neighbour to kth term or distance between them
+                         
+                       
+                       and lrd of xj / n(xi) gives the average lrd points in the neighbor of xi.
+                       
+                       
+                       
+                       
+      when lof(xi) is 
+      
+            small---->   the density of that point is small as compared to its neighbour
+            so, outlier
+            
+            
+            large----->   inlayer
+            
+            
+            
+    esma point haru ko lrd nikalne, yedi lrd sano aayo vane density ni kam xa ani tada xa so outlier, as lrd of that point will be much
+smaller than lrd of that cluster, which inturn make lof greater. greater lof means outlier.
+    
+    
+
+
+
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+Colum Standardization
+
+   Suppose we have 2 features, f1 and f2
+   f1 ranges from 0 to 100 and f2 ranges from 0 to 1
+   
+   then if any algorithm uses distance to find the matched one, like knn 
+   then f2 has almost no change 
+   
+   as d= √(x2-x1)^2 + (y2-y1)^2
+   
+   suppose we have points like: p1(10, 0.2), p2(20, 0.2), p3(10, 1)
+   then from above distance between p1 and p2 is more than p1 and p3, through f2 changed from 0.2 to 1 ie 80% changed,
+   
+   so here comes the column standardization,
+   this maps both the feature on equal scale, so both change can be distinguish
+   
+   
+   column standardization is done by transforming the feature f1 and f2 into f1' and f2' so both the feature has same scale
+   so,
+     mean of f1' and f2' is 0
+     standard deviation of f1' and f2' is 1
+     
+     
+     while transforming the point, suppose point a of f1 and point b of f2 is to be transformed,
+     then
+     
+             a'= a   -   mean of f1
+                 ___________________
+                 
+                 standard deviatio of f1
+                 
+                 
+              b'= b   -   mean of f2
+                 ___________________
+                 
+                 standard deviatio of f2
+                 
+                 
+                 
+                 
+                 
+   @ column standardization must be done if we are using knn
+                 
+   
+
+
+
+
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+
+
+Interpretable model: those model which gives reason with output.  k-nn is interpretable model, suppose we use 4-nn then, if op is true then 
+                        it gives all nn from 1 to 4 and and says the model is like the neighbour.
+                        
+Blackbox model: those model which gives only output
+
+
+
+
+
+
+Feature importance: this means sorting the features according to importance in classification, 
+                this is used in understanding the model, so this make model more interpretable,
+                feature importance gives accuracy which helps us to know which feature is more important
+                
+                knn dont give feature importance 
+                logistic regression and descision tree gives feature importance
+                
+                for the model having many dimension, we may need to find which feature is more important,
+                we can find by:
+                
+                suppose we have 100 dimension data, that means 100 of features are present f1,f2...f100
+                
+                1. forward feature selection:
+                        here in first iteration:
+                             create a model using f1 feature, find its accuracy
+                             create a model using f2 feature, find its accuracy
+                             .
+                             .
+                             so on continue till f100
+                             
+                             find the model having highest accuracy, suppose 49
+                             
+                             
+                        
+                        second iteration:
+                                create a model using f1 and f49 feature, find its accuracy
+                                create a model using f2 and f49 feature, find its accuracy
+                                .
+                                .
+                                so on continue till 100
+                                
+                                fins the model having highest accuracy, suppose 3
+                                
+                                
+                         third iteration 
+                             . . .
+                             
+                             
+                             
+                             from above we can find the importance in following order: f49,f3,...
+                             
+                             
+                             continue till 100 iteration, so more time complexity
+                             
+                             
+                             
+                  2. backward feature selection:
+                          here in first iteration we we find feature with lowest accuracy and remove it,
+                          so on...
+                               
+                        
+
+
+
+
+
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+
+
+
+
+
+Handling Categorical features:
+        suppose among several features we have one feature of country,
+        country is categorical feature
+        so categorical features can be handled by:
+        
+        
+            1. Numerical features:
+                        this means simply gives number to the country name, and find which country. 
+                        we know country cannot be compared but the number we gave to country can be compared, so it may not be suitable to 
+                        give numerical feature.
+                        
+                        
+            2. One hot encoding:
+                        this means again creating a dimension inside the country feature, and we put 1 on selected country and 0 on rest of 
+                        them, this method solve the numerical feature so this can be used only if the number of dimension inside the feature
+                        is less, if the dimension gets bigger or values of categorical feature is greter then one hot encoding will create
+                        large and sparse vectors. 
+                        
+            3. Domain knowledge: 
+                        if we know about the domain of the values in categorical feature then we can give values accordingly,
+                        suppose we are predicting height and we have categorical feature of country, then instead of classifying country, we
+                        give average height of that country in values of categorical feature. 
+                        less interpratible
+                        
+            
+            we have to select from above according to problem, 
+
+
+
+
+
+
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+
+
+
+
+
+
+Missing value Handling
+
+    if the value from the feature is missed then what techniques can be followed:
+    
+    1. Imputational: this is simple imputational, here if f3 has one value missing then we find mean, median or mode and place that value
+    
+    2. Imputational based on class level: here instead of taking mean median or mode as a whole, we first find the cluster and then find
+                       mean median or mode so that value will be average
+                       
+    3. new missing value feature: sometimes missing value also gives the data, suppose we are buying something and the cost of that thing
+                       at that place may be too much, and we decided not to buy, the data will be NaN(not a number). Here NaN has different
+                       meaning as it says the price range is too much, (its better to leave that feature blank than append average value 
+                       here as it gives different sense)
+                       
+    4. Model based imputation: here first we train the data, then we test the data this gives us a model, giving data on model gives output
+                       and missing value is handled.
+                       
+    
+                    
+ 
+ 
+ 
+ 
+ 
+............................................................................................................................................
+............................................................................................................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
